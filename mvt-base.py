@@ -6,30 +6,31 @@ import random
 pygame.init()
 WIDTH, HEIGHT = 1300, 900  # 📺 Taille de la bigass fenêtre
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Nebula Drift")  # 🎮 Nom de la fenêtre
-clock = pygame.time.Clock()
-font = pygame.font.SysFont("Arial", 24)  # 📝 Police pour le texte
+pygame.display.set_caption("PEW PEW PEW")  # Nom de la fenêtre
+clock = pygame.time.Clock() # le frame rate 🏃‍♀️‍➡️
+font = pygame.font.SysFont("Arial", 24)  #  Police pour le texte
 
 high_score = 0  # 🏆 Meilleur score stocké en mémoire
-
+# dans ce code koulchi 3la l'offset dinguerie comment il est à la base du gameplay
+#les 🤸‍♀️ c est pour ls facteur  ou changer la dificulter  et 🧙‍♂️ les remarques
 def main():
-    global high_score
+    global high_score # comme ça on garde le high score 
     paused = False  # ⏸️ État de pause du jeu
 
     # 🚀 Variables du joueur (vaisseau)
-    ship_pos = pygame.Vector2(0, 0)
-    ship_angle =90
-    ship_speed = pygame.Vector2(0, 0)
-    acceleration = 0.15
-    rotation_speed = 3
+    ship_pos = pygame.Vector2(0, 0) 
+    ship_angle =90 # bach iban kay chouf lfou9 ⬆️
+    ship_speed = pygame.Vector2(0, 0) # et oee c est un vecteur 
+    acceleration = 0.15 # 🤸‍♀️on peut changer la difficulter du jeu selon l'acceleration
+    rotation_speed = 3 # 🤸‍♀️on peut changer le drifting du vaisseau
     friction = 0.99
 
-    camera_pos = ship_pos.copy()
+    camera_pos = ship_pos.copy() # la camera suit le vaisseau
     score = 0
     player_health = 100
-    enemy_damage = 25
-    laser_damage_radius = 20
-    laser_speed = 1000  #  Super rapide
+    enemy_damage = 25 # dégâts de l'ennemi 🤸‍♀️on peut changer la difficulter
+    laser_damage_radius = 20 # la zone de degat  🤸‍♀️ on peut changer la difficulter (ila kber c est plus facile)
+    laser_speed = 1000  #  Super rapide 🧙‍♂️ce serait stupid de depasser la "lumière"
     laser_lifetime = 1.5  # ⏱ Temps avant que le laser disparaisse
     damage_flash_timer = 0  #  Durée du flash rouge quand on prend un coup
 
@@ -40,21 +41,22 @@ def main():
     repair_timer = 0
 
     #  Génération aléatoire des étoiles de fond
-    stars = [pygame.Vector2(random.randint(-3000, 3000), random.randint(-3000, 3000)) for _ in range(1000)]
+    stars = [pygame.Vector2(random.randint(-3000, 3000), random.randint(-3000, 3000)) for _ in range(1000)] # cree un liste random de 1000 etoile 
 
     #  Fonction pour faire apparaître un ennemi aléatoirement autour du joueur
     def spawn_enemy():
-        angle = random.uniform(0, 2 * math.pi)
+        angle = random.uniform(0, 2 * math.pi) # 🧙‍♂️ coordonner cylindrique lol (r,θ)
         distance = random.randint(800, 1200)
-        offset = pygame.Vector2(math.cos(angle), math.sin(angle)) * distance
-        return {"pos": ship_pos + offset, "speed": 1.2}
+        offset = pygame.Vector2(math.cos(angle), math.sin(angle)) * distance # cree un vecteur avec les deux variable angle et distance 
+        return {"pos": ship_pos + offset, "speed": 1.2} # cree un dic de la position et la vitesse 1.2 🤸‍♀️ on peut la changer pour augmentere la diffuculte
+    
 
     #  Fonction pour faire apparaître un point de réparation
     def spawn_repair():
         angle = random.uniform(0, 2 * math.pi)
         distance = random.randint(800, 1600)
         offset = pygame.Vector2(math.cos(angle), math.sin(angle)) * distance
-        return {"pos": ship_pos + offset}
+        return {"pos": ship_pos + offset} # tout pareil mais sans la vitesse 🤸‍♀️ on peut augmenter la difficulte en changeant la distance 
 
     spawn_timer = 0
     running = True
@@ -74,67 +76,75 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     paused = not paused  # ⏯️ Pause / Reprise
                 elif event.key == pygame.K_SPACE and not paused:
-                    # 🔫 Créer un laser dans la direction du vaisseau
-                    angle_rad = math.radians(ship_angle)
-                    direction = pygame.Vector2(math.cos(angle_rad), -math.sin(angle_rad))
-                    lasers.append({"pos": pygame.Vector2(ship_pos), "dir": direction, "life": 0.0})
+                    #  Créer un laser dans la direction du vaisseau
+                    angle_rad = math.radians(ship_angle) # converti en rad 🤸‍♀️ si on change l'angle le vaisseau pourra tirer dan d'autre direction
+                    direction = pygame.Vector2(math.cos(angle_rad), -math.sin(angle_rad)) # crée un vecteur direction selon l'angle du vaisseau
+                    lasers.append({"pos": pygame.Vector2(ship_pos), "dir": direction, "life": 0.0}) # ajoute les info du laser dans la liste 
 
         # ⏸ Affichage pause
         if paused:
             pause_text = font.render("⏸ JEU EN PAUSE - Appuie sur ÉCHAP pour reprendre", True, (255, 255, 100))
             screen.blit(pause_text, (WIDTH // 2 - 300, HEIGHT // 2))
-            pygame.display.flip()
-            continue
+            pygame.display.flip() # le flip c est pour afficher tout en une fois sans decalage
+            continue # le continue saute le reste des instructions et recommence la boucle while 
 
         #  Contrôles de mouvement
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            ship_angle += rotation_speed
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_LEFT]: # ⬅️
+            ship_angle += rotation_speed # driftiiing hell yeaah 🧙‍♂️c est l'un des variable initialiser au deeebut du jeu 
+        if keys[pygame.K_RIGHT]: # ➡️
             ship_angle -= rotation_speed
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP]: # ⬆️
             angle_rad = math.radians(ship_angle)
             direction = pygame.Vector2(math.cos(angle_rad), -math.sin(angle_rad))
-            ship_speed += direction * acceleration
-
+            #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            # je vais enlever l'acceleraction :ship_speed += direction  
+            #wooooow wa kay tir c est une dinguerie c est le saut  vitesse lumiere star wars kay khrej de l'ecran sbe9 les laser lol
+            #dooonc si had l'acceleration quand elle = 1 il se teleporte quasiment si elle est nul en theorie le vaisseau ne bouge pas du centre 
+            # nope c est pas ça il reste peut etre au centre mais il avance pas ga3 
+            
+            ship_speed += direction * acceleration  #  🧙‍♂️formule physique lol 
+            
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #  Physique du vaisseau
-        ship_speed *= friction
-        ship_pos += ship_speed
-        camera_pos += (ship_pos - camera_pos) * 0.05  # 🎥 Caméra qui suit doucement
-        offset = camera_pos - pygame.Vector2(WIDTH // 2, HEIGHT // 2)
+        ship_speed *= friction # comme ça on avance a  ∞ mec j ai juste mis *2 il a quité le jeu tellement on allait vite bahahaha
+        # 🧍‍♀️ ptnnnn cest normale de baaaase c'est pour reduire la vitesse ou ana ki chi kheria ça n'a pas arreter d'accelerer et meme pas  au bout d'une seconde khrej
+        ship_pos += ship_speed #le nom est trompeur en sa7 j aurais du l appeler ship_deplacement 
+        camera_pos += (ship_pos - camera_pos) * 0.05  #  Caméra qui suit doucement 🧙‍♂️ le fameux decalaaaage 
+        offset = camera_pos - pygame.Vector2(WIDTH // 2, HEIGHT // 2) # calcul pour recentrer la camera ,(WIDTH // 2, HEIGHT // 2) c est les coordonner du centre de l'ecran
 
         #  Affichage des étoiles
         for star in stars:
             screen_pos = star - offset
             if 0 <= screen_pos.x < WIDTH and 0 <= screen_pos.y < HEIGHT:
-                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), 2)
+                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), 2) # dessine les etoiles 
 
         #  Apparition régulière des ennemis
         spawn_timer += dt
-        if spawn_timer >= 2:
+        if spawn_timer >= 2: # apparition toutes les 2 secondes 🤸‍♀️ on peut changer la difficulter en changeant cette valeur
             enemies.append(spawn_enemy())
             spawn_timer = 0
 
         #  Apparition des points de réparation
-        repair_timer += dt
-        if repair_timer >= 5:
+        repair_timer += dt 
+        if repair_timer >= 5: # pareil 🤸‍♀️ on peut augmenter  la difficulter en baisssant  5
             repairs.append(spawn_repair())
             repair_timer = 0
 
         #  Ennemis : déplacement + collision avec joueur
-        for enemy in enemies[:]:
-            enemy["pos"] += (ship_pos - enemy["pos"]).normalize() * enemy["speed"]
-            if enemy["pos"].distance_to(ship_pos) < 30:
+        for enemy in enemies[:]: # 🧙‍♂️ le [:] c est pour faire une copie et pas endommager la liste de base
+            enemy["pos"] += (ship_pos - enemy["pos"]).normalize() * enemy["speed"] # l'ennemi reduit sa distance avec le joueur 🧙‍♂️ normalize c est vrm pour avoir seulement la direction du vecteur sans sa norme
+            if enemy["pos"].distance_to(ship_pos) < 30: # 30 px 🧙‍♂️
                 player_health -= enemy_damage
-                damage_flash_timer = 0.3  #  Déclenche le flash rouge
+                damage_flash_timer = 0.3  # 🧙‍♂️ Déclenche le flash rouge
                 enemies.remove(enemy)
-                continue
+                continue # 🧙‍♂️ on sort de la boucle for pour cet ennemi vu qu il s'est suicider mskine en vrai c est des kamikaze 🥀
             screen_pos = enemy["pos"] - offset
             pygame.draw.circle(screen, (255, 50, 50), (int(screen_pos.x), int(screen_pos.y)), 12)
 
-        #  Lasers : déplacement + collisions
+        #  Lasers : déplacement + collisions avec ennemis
         for laser in lasers[:]:
-            laser["pos"] += laser["dir"] * laser_speed * dt
+            laser["pos"] += laser["dir"] * laser_speed * dt #la definition du mvt litteralement 🧙‍♂️
             laser["life"] += dt
 
             for enemy in enemies[:]:

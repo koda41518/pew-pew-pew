@@ -64,7 +64,7 @@ class Ship:
             self.speed += direction * self.acceleration
 
             # 🎞️ Animation boost
-            self.boost_timer += 1 / 60  # ou dt si tu veux passer le temps réel
+            self.boost_timer += 1 / 60  # ou dt si on veut passer le temps réel
             if self.boost_timer >= self.boost_speed:
                 self.boost_index = (self.boost_index + 1) % len(self.boost_frames)
                 self.boost_timer = 0
@@ -91,7 +91,7 @@ class Ship:
             #print("💥 Bouclier absorbé !")
             self.has_shield = False
         else:
-            #print("❤️🥀 Vie perdue !")
+            #print("❤️🥀oh nooowh Vie perdue !")
             self.health = max(0, self.health - amount)
 
         self.invincible_timer = 1.0  # 1 seconde d’invincibilité

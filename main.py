@@ -51,7 +51,7 @@ def main():
 
     # === Initialisation des objets du jeu ===
     ship = Ship((0, 0), settings.SHIP_SPRITES)
-    camera = Camera(ship.pos)
+    camera = Camera(ship.pos.copy()) #. hadiiiii ptnnnnn c est .copie qui change tout le vaisseau n est plus clouer au centre
     background = StarField()
     flash = DamageFlash()
     manager = GameManager()
@@ -85,19 +85,22 @@ def main():
                     paused = False
                     button_rect = None
 
-        # === Mise à jour ===
-        if not paused and not manager.game_over:
-            keys = pygame.key.get_pressed()
-            ship.update(keys)
-            camera.update(ship.pos, lerp_factor=0.15)
-            manager.update(ship, dt)
-            flash.update(dt)
+
 
         # === Dessin à l’écran ===
         screen.fill(settings.BACKGROUND_COLOR)
         offset = camera.get_offset((settings.WIDTH, settings.HEIGHT))
         background.draw(screen, camera.pos, (settings.WIDTH, settings.HEIGHT))
 
+        # === Mise à jour ===
+        if not paused and not manager.game_over:
+            keys = pygame.key.get_pressed()
+            ship.update(keys)
+            camera.update(ship.pos, lerp_factor=0.05)
+            manager.update(ship, dt)
+            flash.update(dt)
+
+        
         # Dessin des entités
         for entity_group in [manager.lasers, manager.enemies, manager.repairs, manager.shield_pickups]:
             for entity in entity_group:

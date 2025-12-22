@@ -9,25 +9,28 @@ Assets :
 ───────────
     Les sprites dessinés 👨‍🎨✨ sur ce site :
     => https://www.pixilart.com/draw. 
+    en vrai j'ai pas eu le time pour test d'autre site et dessiner avec une souris c est 7ar 👩‍🦯‍➡️
 
     Les images sont placées dans le dossier assets/ (vaisseau, ennemis, bouclier, réparateurs, etc.)🏃‍♀️‍➡️
 
 ──────────────────────
 Fichiers principaux :
 ──────────────────────
-    main.py
-    C’est le fichier principal du jeu.
-    => Pour lancer la version  clean  :   "python main.py" 
+    faut taper d'abord "source env/bin/activate"
+    ensuite pour ouvrire:
+        main.py
+        C’est le fichier principal du jeu.
+        => Pour lancer la version  clean  :   "python main.py" 
 
-    mvt-base.py
-    Une ancienne version du jeu, plus simple,  avec juste la mécanique de déplacement.
-    => Pour tester cette version :       "python mvt-base.py"
+        mvt-base.py
+        Une ancienne version du jeu, plus simple,  avec juste la mécanique de déplacement.
+        => Pour tester cette version :       "python mvt-base.py"
 
 ────────────────────────────────
 Commande pour lancer le jeu :
 ────────────────────────────────
 
-    Avant de lancer le jeu, installe les dépendances ; 
+    pour lancer le jeu la 1ere fois, installe les dépendances ; 
     dans un env " python3 -m venv env
                   source env/bin/activate"
                    
@@ -39,16 +42,16 @@ Commande pour lancer le jeu :
 ────────────────
     ├── assets  
     │   ├── ship-sprit/            # Vaisseau  
-    │   ├── enemies-sprit/         # 🔴 Ennemis  
-    │   ├── repair-sprit/          # 🟢 Réparateurs  
-    │   ├── shield-sprit/          # 🔵 Boucliers  
+    │   ├── enemies-sprit/         # 🔴 Ennemis      -│
+    │   ├── repair-sprit/          # 🟢 Réparateurs   │-- hadou kamlin en vrai c est le meme objet 
+    │   ├── shield-sprit/          # 🔵 Boucliers    -│
     │   └── laser-sprit/  
     ├── core/                      # Gestion du jeu  🫩
     │   └── GameManager.py  
     ├── entities_classes/          # Tous les objets du jeu  
     ├── ui/                        # Interface utilisateur  
     ├── main.py                    # Lance le jeu  
-    ├── mvt-base.py                # Version basique  🤸‍♀️
+    ├── mvt-base.py                # Version basique  🤸‍♀️ mon brouillon 
     ├── settings.py                # Paramètres du jeu  
     ├── requirements.txt  
     └── note.txt                   # Ce fichier 🧚‍♀️
