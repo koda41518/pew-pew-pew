@@ -13,6 +13,7 @@ font = pygame.font.SysFont("Arial", 24)  #  Police pour le texte
 high_score = 0  # 🏆 Meilleur score stocké en mémoire
 # dans ce code koulchi 3la l'offset dinguerie comment il est à la base du gameplay
 #les 🤸‍♀️ c est pour ls facteur  ou changer la dificulter  et 🧙‍♂️ les remarques
+#on peut essayer de faire un systeme de niveau oula plusieurs type de vaisseau ou d ennemie en changeant les 🤸‍♀️
 def main():
     global high_score # comme ça on garde le high score 
     paused = False  # ⏸️ État de pause du jeu
@@ -27,7 +28,7 @@ def main():
 
     camera_pos = ship_pos.copy() # la camera suit le vaisseau
     score = 0
-    player_health = 100
+    player_health = 100  # 🤸‍♀️ on peut rajouter un mode extreme ou on met 1 blast 100
     enemy_damage = 25 # dégâts de l'ennemi 🤸‍♀️on peut changer la difficulter
     laser_damage_radius = 20 # la zone de degat  🤸‍♀️ on peut changer la difficulter (ila kber c est plus facile)
     laser_speed = 1000  #  Super rapide 🧙‍♂️ce serait stupid de depasser la "lumière"
@@ -41,7 +42,9 @@ def main():
     repair_timer = 0
 
     #  Génération aléatoire des étoiles de fond
-    stars = [pygame.Vector2(random.randint(-3000, 3000), random.randint(-3000, 3000)) for _ in range(1000)] # cree un liste random de 1000 etoile 
+    stars = [(pygame.Vector2(random.randint(-3000, 3000), random.randint(-3000, 3000)), random.randint(1, 3)) for _ in range(1000)] # cree un liste random de 1000 etoile 
+    # 🕺🏼 pour crée un effet de paralaxe jvais modif la liste
+    #j ai ajouter une profondeur a chaque etoile au pif de 1 à 3 telle que etoile = (position, profondeur)
 
     #  Fonction pour faire apparaître un ennemi aléatoirement autour du joueur
     def spawn_enemy():
@@ -114,10 +117,15 @@ def main():
         offset = camera_pos - pygame.Vector2(WIDTH // 2, HEIGHT // 2) # calcul pour recentrer la camera ,(WIDTH // 2, HEIGHT // 2) c est les coordonner du centre de l'ecran
 
         #  Affichage des étoiles
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        #on va ajouter un effet de parallaxe ila bgha
         for star in stars:
-            screen_pos = star - offset
+            parallax_offset = offset * star[1] # normalement si jme suis pas foiré la profondeur c'est  l'indice 
+            screen_pos = star[0] - parallax_offset/4 #p QUATRE c est prfait 😝
             if 0 <= screen_pos.x < WIDTH and 0 <= screen_pos.y < HEIGHT:
-                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), 2) # dessine les etoiles 
+                radius = max(1, int(2 * (1.1 - star[1])))
+                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), radius) # dessine les etoiles 
+        
 
         #  Apparition régulière des ennemis
         spawn_timer += dt
@@ -198,15 +206,15 @@ def main():
         screen.blit(font.render(f"Score : {score}", True, (255, 255, 255)), (10, 70))
 
         #  Mini-map
-        minimap_size = 200
-        minimap_scale = 0.05
+        minimap_size = 200 # petit carré 🧙‍♂️
+        minimap_scale = 0.05 # facteur de reduction 🧙‍♂️
         minimap_surface = pygame.Surface((minimap_size, minimap_size))
         minimap_surface.fill((20, 20, 40))
         center = pygame.Vector2(minimap_size // 2, minimap_size // 2)
         pygame.draw.circle(minimap_surface, (200, 200, 255), center, 5)
 
         for enemy in enemies:
-            rel_pos = (enemy["pos"] - ship_pos) * minimap_scale
+            rel_pos = (enemy["pos"] - ship_pos) * minimap_scale #  🧙‍♂️tout pareil multiplié par le facteur de reduction
             map_pos = center + rel_pos
             if 0 <= map_pos.x < minimap_size and 0 <= map_pos.y < minimap_size:
                 pygame.draw.circle(minimap_surface, (255, 60, 60), (int(map_pos.x), int(map_pos.y)), 3)
