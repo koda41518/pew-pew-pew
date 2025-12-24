@@ -118,7 +118,7 @@ def main():
 
         #  Affichage des étoiles
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        #on va ajouter un effet de parallaxe ila bgha
+        #on va ajouter un effet de parallaxe infini 🧙‍♂️
         bounds = 3000
         for star in stars: # star = (position (x,y), profondeur z)
             pos = star[0] #(x,y)

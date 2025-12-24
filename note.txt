@@ -4,6 +4,23 @@
     Réalisé avec Pygame, avec des sprites custom dessinés 👨‍🎨✨
     in progress 🏃‍♂️ -u-
 
+────────────────
+🧠 Idées amelioration :
+────────────────
+# Faut pousser le joueur a se deplacer
+    . soit un objectif a suivre
+    . soit (hadi fikra U I A) des projectils limité comme ça le vaisseau est obligé
+
+# Faut avoir un but
+    . on peut forcer le vaisseai a suivre un autre truc qui bouge aussi
+    . oula des mission style on doit reunir le max de chi 7aja
+    . faut aussi avoir une sorte de tableau de bord on peut le faire en tant qu option dans le menue pose 
+        . ce tableau de bord peut proposer des missions style "Jetpack joyride"
+    . on mets aussi une monnaie
+        . bon voila l idee : 
+        disant qu on fait de la contre bande on est pirate cuz why not et on se bat contre un empire dictatorial , 
+        et que chaque enneims tué apporte des pieces .on peut ensuite ameliorer le vaiseau avec des points d'acceleration ou des laser plus puissant 
+
 ───────────
 Assets :
 ───────────
@@ -57,27 +74,12 @@ Commande pour lancer le jeu :
     └── note.txt                   # Ce fichier 🧚‍♀️
 
 ────────────────
-🧠 Idées amelioration :
+ 🙋‍♀️ REMARQUE !!!
 ────────────────
-# Faut pousser le joueur a se deplacer
-    . soit un objectif a suivre
-    . soit (hadi fikra U I A) des projectils limité comme ça le vaisseau est obligé
-
-# Faut avoir un but
-    . on peut forcer le vaisseai a suivre un autre truc qui bouge aussi
-    . oula des mission style on doit reunir le max de chi 7aja
-    . faut aussi avoir une sorte de tableau de bord on peut le faire en tant qu option dans le menue pose 
-        . ce tableau de bord peut proposer des missions style "Jetpack joyride"
-    . on mets aussi une monnaie
-        . bon voila l idee : 
-        disant qu on fait de la contre bande on est pirate cuz why not et on se bat contre un empire dictatorial , 
-        et que chaque enneims tué apporte des pieces .on peut ensuite ameliorer le vaiseau avec des points d'acceleration ou des laser plus puissant 
-
-# REMARQUE 
     . pour les etoiles qui se termine on a plusieurs options 
     soit  on limite l'espace jouable , j ai pas trop envie de faire 
     soit on fait en sorte qu a une certaine distance les etoile se teleporte jsp si cv marcher 
-        . d'apres gemini on peut utliser le principe du modulo ; Wrapping par Modulo
+        . d'apres gemini on peut utliser le principe du modulo ; 🥁 Wrapping par Modulo 🎉
         POUR PAS saturer la mémoire de l'ordinateur 
         paceque de baaaaase on une liste d'etoile qu'on pose fixe
        #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
