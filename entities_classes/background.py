@@ -7,7 +7,7 @@ class StarField:
         self.stars = [
             {
                 "pos": pygame.Vector2(random.randint(-bounds, bounds), random.randint(-bounds, bounds)),
-                "depth": random.randint(1, 5)  # ➤ Plus petit = plus loin
+                "depth": random.randint(1, 3)  # ➤ Plus petit = plus loin
             } # les strars ont deux attributs la position et la profondeur
             for _ in range(num_stars)
         ]
