@@ -119,13 +119,29 @@ def main():
         #  Affichage des étoiles
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #on va ajouter un effet de parallaxe ila bgha
-        for star in stars:
-            parallax_offset = offset * star[1] # normalement si jme suis pas foiré la profondeur c'est  l'indice 
-            screen_pos = star[0] - parallax_offset/4 #p QUATRE c est prfait 😝
-            if 0 <= screen_pos.x < WIDTH and 0 <= screen_pos.y < HEIGHT:
-                radius = max(1, int(2 * (1.1 - star[1])))
-                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), radius) # dessine les etoiles 
-        
+        bounds = 3000
+        for star in stars: # star = (position (x,y), profondeur z)
+            pos = star[0] #(x,y)
+            profondeur = star[1] # z
+            # 1. Calcul de la position relative (avec parallaxe)
+            # Plus depth est grand, plus l'étoile est "loin" et bouge lentement
+            rel_x = pos.x - (offset.x / profondeur)
+            rel_y = pos.y - (offset.y / profondeur)
+            # 2. Le Wrapping par Modulo ✨ 
+            # On ramène rel_x dans l'intervalle [-3000, 3000]
+            render_x = (rel_x + bounds) % (2 * bounds) - bounds # on peut  appeler .x et .y parcequ on a l a definie avec Vector2
+            """ (rel_x + bounds) :  on mettant + bounds pour eviter les valeurs negatives
+                %(2 * bounds)    :   ensuite on fait le modulo pour ramener dans [0, 6000]
+                - bounds         :  et enfin on remet dans [-3000, 3000] en enlevant bounds"""
+            render_y = (rel_y + bounds) % (2 * bounds) - bounds
+            # 3. Conversion en coordonnées écran (centrage)
+            screen_x = render_x + WIDTH // 2  #  + WIDTH // 2 pour centrer l'étoile à l'écran
+            screen_y = render_y + HEIGHT // 2
+            # 4. Affichage (seulement si c'est dans la vue)
+            if 0 <= screen_x < WIDTH and 0 <= screen_y < HEIGHT:
+                # On ajuste la taille selon la profondeur
+                radius = 1 if profondeur > 2 else 2 
+                pygame.draw.circle(screen, (255, 255, 255), (int(screen_x), int(screen_y)), radius)
 
         #  Apparition régulière des ennemis
         spawn_timer += dt

@@ -55,3 +55,43 @@ Commande pour lancer le jeu :
     ├── settings.py                # Paramètres du jeu  
     ├── requirements.txt  
     └── note.txt                   # Ce fichier 🧚‍♀️
+
+────────────────
+🧠 Idées amelioration :
+────────────────
+# Faut pousser le joueur a se deplacer
+    . soit un objectif a suivre
+    . soit (hadi fikra U I A) des projectils limité comme ça le vaisseau est obligé
+
+# Faut avoir un but
+    . on peut forcer le vaisseai a suivre un autre truc qui bouge aussi
+    . oula des mission style on doit reunir le max de chi 7aja
+    . faut aussi avoir une sorte de tableau de bord on peut le faire en tant qu option dans le menue pose 
+        . ce tableau de bord peut proposer des missions style "Jetpack joyride"
+    . on mets aussi une monnaie
+        . bon voila l idee : 
+        disant qu on fait de la contre bande on est pirate cuz why not et on se bat contre un empire dictatorial , 
+        et que chaque enneims tué apporte des pieces .on peut ensuite ameliorer le vaiseau avec des points d'acceleration ou des laser plus puissant 
+
+# REMARQUE 
+    . pour les etoiles qui se termine on a plusieurs options 
+    soit  on limite l'espace jouable , j ai pas trop envie de faire 
+    soit on fait en sorte qu a une certaine distance les etoile se teleporte jsp si cv marcher 
+        . d'apres gemini on peut utliser le principe du modulo ; Wrapping par Modulo
+        POUR PAS saturer la mémoire de l'ordinateur 
+        paceque de baaaaase on une liste d'etoile qu'on pose fixe
+       #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        stars = [(pygame.Vector2(random.randint(-3000, 3000), random.randint(-3000, 3000)), random.randint(1, 3)) for _ in range(1000)] # cree un liste random de 1000 etoile 
+        for star in stars:
+            parallax_offset = offset * star[1] # normalement si jme suis pas foiré la profondeur c'est  l'indice 
+            render_x = (offset * star[0][0] + bounds) % (2 * bounds) - bounds
+            render_y = (offset * star[0][1] + bounds) % (2 * bounds) - bounds
+            # 3. Conversion en coordonnées écran (centrage)
+            screen_pos_x = render_x + WIDTH // 2
+            screen_pos_y = render_y + HEIGHT // 2
+            """screen_pos = star[0] - parallax_offset/4 #p QUATRE c est prfait 😝"""
+            if 0 <= screen_pos.x < WIDTH and 0 <= screen_pos.y < HEIGHT:
+                radius = max(1, int(2 * (1.1 - star[1])))
+                pygame.draw.circle(screen, (255, 255, 255), (int(screen_pos.x), int(screen_pos.y)), radius) # dessine les etoiles 
+        #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        mtn avec le modulo on les fait reapparaitre plus loins 
